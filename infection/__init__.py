@@ -1,1 +1,1 @@
-from .mundo import Mundo
+from . import fabrica
