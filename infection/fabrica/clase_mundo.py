@@ -1,3 +1,5 @@
+import numpy as np
+
 class Mundo:
     
     def __init__(self, n_columnas, n_filas):
@@ -12,13 +14,12 @@ class Mundo:
         numero_celdas_ocupadas = ocupacion * self.numero_columnas * self.numero_filas
         numero_celdas_ocupadas = int(numero_celdas_ocupadas)
 
-        contador  = 0
+        aux_lista = []
+        for ii in range(self.numero_filas):
+            for jj in range(self.numero_columnas):
+                aux_lista.append([ii,jj])
 
-        while contador<numero_celdas_ocupadas:
+        np.random.shuffle(aux_lista)
 
-            ii = np.random.randint(0,self.numero_filas)
-            jj = np.random.randint(0,self.numero_columnas)
-
-            if (self.mapa[ii,jj]==0):
-                self.mapa[ii,jj]=1
-                contador = contador + 1
+        for kk in range(numero_celdas_ocupadas):
+            self.mapa[aux_lista[kk]]=1
