@@ -22,4 +22,25 @@ class Mundo:
         np.random.shuffle(aux_lista)
 
         for kk in range(numero_celdas_ocupadas):
-            self.mapa[aux_lista[kk]]=1
+            ii=aux_lista[kk][0]
+            jj=aux_lista[kk][1]
+            self.mapa[ii,jj]=1
+
+        pass
+
+    def infecto_paciente_cero(self):
+
+        posibles_pacientes_cero=[]
+
+        for ii in range(self.mapa.shape[0]):
+            for jj in range(self.mapa.shape[1]):
+                if self.mapa[ii,jj]==1:
+                    posibles_pacientes_cero.append([ii,jj])
+
+        nn = np.random.randint(0, len(posibles_pacientes_cero))
+        paciente_cero=posibles_pacientes_cero[nn]
+
+        print(paciente_cero)
+        self.mapa[paciente_cero]=2
+
+        pass
