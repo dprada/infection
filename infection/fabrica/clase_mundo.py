@@ -2,7 +2,7 @@ import numpy as np
 
 class Mundo:
     
-    def __init__(self, n_columnas, n_filas):
+    def __init__(self, n_filas, n_columnas):
 
         self.numero_columnas = n_columnas
         self.numero_filas = n_filas
@@ -30,6 +30,13 @@ class Mundo:
 
     def infecto_paciente_cero(self):
 
+        aux = (self.mapa==2)
+        if aux.sum()>0:
+            ya_infectados = np.argwhere(aux)
+            if len(ya_infectados)>0:
+                for ii,jj in ya_infectados:
+                    self.mapa[ii,jj]=1
+
         posibles_pacientes_cero=[]
 
         for ii in range(self.mapa.shape[0]):
@@ -38,9 +45,12 @@ class Mundo:
                     posibles_pacientes_cero.append([ii,jj])
 
         nn = np.random.randint(0, len(posibles_pacientes_cero))
+
         paciente_cero=posibles_pacientes_cero[nn]
 
-        print(paciente_cero)
-        self.mapa[paciente_cero]=2
+        ii, jj = paciente_cero
+
+        self.mapa[ii,jj]=2
 
         pass
+
