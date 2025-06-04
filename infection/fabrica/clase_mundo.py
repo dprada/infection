@@ -1,4 +1,7 @@
 import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.colors import ListedColormap
+cmap=ListedColormap(['white', 'gray', 'red'])
 
 class Mundo:
     
@@ -53,4 +56,15 @@ class Mundo:
         self.mapa[ii,jj]=2
 
         pass
+
+    def veo_mapa(self):
+
+        plt.imshow(self.mapa, origin='lower', cmap=cmap)
+        return plt.show()
+
+    #def propago_infeccion(self):
+
+
+        
+
 
