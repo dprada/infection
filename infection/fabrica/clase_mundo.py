@@ -12,6 +12,11 @@ class Mundo:
 
         self.mapa = np.zeros((n_filas, n_columnas), dtype=int)
 
+        self.ocupacion = 0.0
+        self.numero_personas = 0
+        self.ocupacion_infectada = 0.0
+        self.numero_personas_infectadas = 0
+
     def ocupacion_inicial(self, ocupacion):
 
         numero_celdas_ocupadas = ocupacion * self.numero_columnas * self.numero_filas
@@ -28,6 +33,9 @@ class Mundo:
             ii=aux_lista[kk][0]
             jj=aux_lista[kk][1]
             self.mapa[ii,jj]=1
+
+        self.ocupacion = ocupacion
+        self.numero_personas = numero_celdas_ocupadas
 
         pass
 
@@ -55,6 +63,10 @@ class Mundo:
 
         self.mapa[ii,jj]=2
 
+        self.numero_personas_infectadas = 1
+        self.ocupacion_infectada = self.numero_personas_infectadas/self.numero_personas
+
+
         pass
 
     def veo_mapa(self):
@@ -62,9 +74,37 @@ class Mundo:
         plt.imshow(self.mapa, origin='lower', cmap=cmap)
         return plt.show()
 
-    #def propago_infeccion(self):
+    def propago_infeccion(self):
 
+        lista_nuevos_infectados = np.argwhere(self.mapa==2).tolist()
 
+        aux_list = []
+
+        while len(lista_nuevos_infectados)>0:
         
+            for infectado in lista_nuevos_infectados:
+        
+                vecinos = []
+        
+                for incremento in [[1,1], [1,0], [1,-1],
+                                   [0,1], [0,-1],
+                                   [-1,1], [-1,0], [-1,-1]]:
+                    posible_vecino = np.array(infectado)+np.array(incremento)
+                    ii = posible_vecino[0]
+                    jj = posible_vecino[1]
+                    if ii>=0 and ii<self.numero_filas:
+                        if jj>=0 and jj<self.numero_columnas:
+                            if self.mapa[ii, jj]==1:
+                                self.mapa[ii, jj]=2
+                                aux_list.append([int(ii),int(jj)])
+        
+            lista_nuevos_infectados = aux_list
+            aux_list = []
+        
+        self.numero_personas_infectadas = (self.mapa == 2).sum()
+        self.ocupacion_infectada = self.numero_personas_infectadas/self.numero_personas
+
+
+        pass
 
 
